@@ -6,6 +6,9 @@ require_once "connection.php";
 // GET DATA
 require_once "get_data.php";
 
+// START SESSION
+session_start();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -56,6 +59,12 @@ require_once "get_data.php";
         .add_form > input {
             width: 150px;
         }
+
+        .error_msg {
+            background-color: red;
+            width: 300px;
+            border: 3px solid darkred;
+        }
     </style>
 </head>
 <body>
@@ -79,8 +88,8 @@ require_once "get_data.php";
             $j++;
         }
         echo "<td>" .
-        "<form class='action_form' action='delete.php' method='POST'><input type='value' value='" . $data[$i][0] . "'><input type='submit' value='Delete'></form>" .
-        "<form class='action_form' action='modify.php' method='POST'><input type='value' value='" . $data[$i][0] . "'><input type='submit' value='Modify'></form>" .
+            "<form class='action_form' action='action/ACTION_delete.php' method='POST'><input type='value' name='ID' value='" . $data[$i][0] . "'><input type='submit' value='Delete'></form>" .
+            "<form class='action_form' action='modify.php'               method='POST'><input type='value' name='ID' value='" . $data[$i][0] . "'><input type='submit' value='Modify'></form>" .
             "</td>";
         echo "</tr>";
         $j = 0;
@@ -88,11 +97,17 @@ require_once "get_data.php";
     }
     ?>
 </table>
-<form class="add_form" action="action/add.php" method="POST">
+<form class="add_form" action="action/ACTION_add.php" method="POST">
     <input type="text"      name='first_name'   placeholder="First name">
     <input type="text"      name='last_name'    placeholder="Last name">
     <input type="text"      name='age'          placeholder="Age">
-    <input type="submit"    value="Add">
+    <input type="submit">
 </form>
+<?php
+
+// SHOW ERROR MESSAGES
+require_once "show_error_msg.php";
+
+?>
 </body>
 </html>
